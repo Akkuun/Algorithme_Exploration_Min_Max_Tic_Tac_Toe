@@ -63,7 +63,7 @@ function App() {
                         <Square
                             key={ind}
                             ind={ind}
-                            updateSquares={handleSquareClick}  // Utilise la fonction de clic
+                            updateSquares={handleSquareClick}
                             clsName={squares[ind]}
                         />
                     ))}
