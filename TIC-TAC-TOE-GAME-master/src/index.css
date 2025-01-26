@@ -193,3 +193,7 @@ body {
     width: 80%; /* Ajustez la largeur globale */
     height: auto;
 }
+
+#bestMove{
+    color: white;
+}

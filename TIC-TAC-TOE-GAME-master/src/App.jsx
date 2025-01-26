@@ -20,6 +20,7 @@ function App() {
         resetGame,
         toggleAiMode,
         changeDifficulty,
+        bestMove,
     } = useTicTacToe();
 
     // Fonction pour jouer le son lorsqu'une case est cliquée
@@ -72,6 +73,10 @@ function App() {
                 <div className={`turn ${turn === "x" ? "left" : "right"}`}>
                     <Square clsName="x" />
                     <Square clsName="o" />
+                </div>
+
+                <div id="bestMove">
+                    Best Move given by MinMax Algorithm is : line { bestMove[0]} : column  {bestMove[1] }
                 </div>
 
                 <AnimatePresence>
@@ -160,6 +165,7 @@ function App() {
             <div id="OIA_2">
                 <img src={GIF} alt="Cool animation" />
             </div>
+
         </div>
     );
 }
