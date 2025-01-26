@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTicTacToe } from "./hooks/useTicTacToe";
@@ -6,13 +5,12 @@ import Button from "./components/Button";
 import Square from "./components/Square";
 import GIF from "./ressources/Cat_GIF.gif";
 import './index.css';
-
-// Importation for audio file lecture
 import clickSound from './ressources/buttonSound.mp3';
-
+import Lottie from 'lottie-react';
+import confettiAnimation from './ressources/confettiAnimation.json';
 
 function App() {
-    const [audio] = useState(new Audio(clickSound)); // Crée un nouvel objet Audio
+    const [audio] = useState(new Audio(clickSound));
     const {
         squares,
         turn,
@@ -26,10 +24,9 @@ function App() {
         bestMove,
     } = useTicTacToe();
 
-    // Fonction pour jouer le son lorsqu'une case est cliquée
     const handleSquareClick = (index) => {
-        audio.play(); // Joue le son
-        updateSquares(index); // Mets à jour les cases du jeu
+        audio.play();
+        updateSquares(index);
     };
 
     return (
@@ -172,6 +169,16 @@ function App() {
                 <img src={GIF} alt="Cool animation" />
             </div>
 
+            {winner && (
+                <>
+                    <div className="confetti-left">
+                        <Lottie animationData={confettiAnimation} loop={true} />
+                    </div>
+                    <div className="confetti-right">
+                        <Lottie animationData={confettiAnimation} loop={true} />
+                    </div>
+                </>
+            )}
         </div>
     );
 }
