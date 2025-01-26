@@ -7,7 +7,6 @@
     <list default="true" id="97fc2a4e-c9d3-45c8-a1f3-c144356bb395" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TIC-TAC-TOE-GAME-master/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/TIC-TAC-TOE-GAME-master/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TIC-TAC-TOE-GAME-master/src/hooks/useTicTacToe.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/TIC-TAC-TOE-GAME-master/src/hooks/useTicTacToe.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TIC-TAC-TOE-GAME-master/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/TIC-TAC-TOE-GAME-master/src/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TIC-TAC-TOE-GAME-master/src/utils/MinMax.js" beforeDir="false" afterPath="$PROJECT_DIR$/TIC-TAC-TOE-GAME-master/src/utils/MinMax.js" afterDir="false" />
     </list>
@@ -94,7 +93,7 @@
       <workItem from="1737823126080" duration="2047000" />
       <workItem from="1737825212020" duration="1280000" />
       <workItem from="1737909872491" duration="630000" />
-      <workItem from="1737920881522" duration="2052000" />
+      <workItem from="1737920881522" duration="3457000" />
     </task>
     <servers />
   </component>

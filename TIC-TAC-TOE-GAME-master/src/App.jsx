@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTicTacToe } from "./hooks/useTicTacToe";
 import Button from "./components/Button";
 import Square from "./components/Square";
 import GIF from "./ressources/Cat_GIF.gif";
+import './index.css';
 
-// Import du fichier audio
+// Importation for audio file lecture
 import clickSound from './ressources/buttonSound.mp3';
+
 
 function App() {
     const [audio] = useState(new Audio(clickSound)); // Crée un nouvel objet Audio
@@ -75,8 +78,11 @@ function App() {
                     <Square clsName="o" />
                 </div>
 
-                <div id="bestMove">
-                    Best Move given by MinMax Algorithm is : line { bestMove[0]} : column  {bestMove[1] }
+                <div className="bestMove">
+                    Best Move given by MinMax Algorithm is :
+                </div>
+                <div id="blocMove">
+                    <div className="bestMove">line <span className={turn}>{bestMove[0]}</span> : column <span className={turn}>{bestMove[1]}</span></div>
                 </div>
 
                 <AnimatePresence>

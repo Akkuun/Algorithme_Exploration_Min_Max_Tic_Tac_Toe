@@ -194,6 +194,23 @@ body {
     height: auto;
 }
 
-#bestMove{
+.bestMove {
     color: white;
+}
+
+.x {
+    color: #0ec1c1;
+}
+
+.o {
+    color: #e47305;
+}
+
+#blocMove {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 10%;
+    margin: 10%;
 }
