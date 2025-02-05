@@ -1,13 +1,17 @@
 export const setN = (num) => {
     let k;
 
-    if (num === 3) {
-        k = 3;
-    } else {
-        k = 4;
+    switch(num){
+        case 3:
+            k = 3;
+            break;
+        default:
+            k = num -1;
+            break;
     }
     return k;
 }
+
 export function isInGrid(i, j, n){
     return i >= 0 && i < n && j >= 0 && j < n;
 }
@@ -18,13 +22,13 @@ export function isInGrid(i, j, n){
  * @param {*} n (squareSize)
  * @param {*} direction (vector of 2 elements representing the direction)
  */
-export function getLineIndexes(i, j, n, direction){
+export function getLineIndexes(i, j, n, direction, k){
     let indexes = [];
     let x = i;
     let y = j;
-    for (let m = 0; m < n; m++) {
+    for (let m = 0; m < k; m++) {
         if (!isInGrid(x, y, n)) return null;
-        indexes.push([x, y]);
+        indexes.push(x * n + y);
         x += direction[0];
         y += direction[1];
     }
@@ -49,10 +53,10 @@ export const WINNING_COMBOS = (tab, squareSize) =>{
         tab.add([0, 4, 8]);
         tab.add([2, 4, 6]);
     }else{
-        for(let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
+        for(let i = 0; i < squareSize; i++) {
+            for (let j = 0; j < squareSize; j++) {
                 for (let vector of DIRECTIONS) {
-                    let indexes = getLineIndexes(i, j, k, vector);
+                    let indexes = getLineIndexes(i, j, squareSize, vector, k);
                     if (indexes) {
                         tab.add(indexes);
                     }
@@ -67,9 +71,16 @@ export const checkWinner = (board, squareSize) => {
     const winningCombos = new Set();
     WINNING_COMBOS(winningCombos, squareSize)
     for (let combo of winningCombos) {
-        const [a, b, c] = combo;
-        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-            return board[a];
+        let player = board[combo[0]];
+        if (!player) continue;
+        for (let i = 1; i < setN(squareSize); i++) {
+            if (player !== board[combo[i]]) {
+                player = null;
+                break;
+            }
+        }
+        if (player) {
+            return player;
         }
     }
     return null;
