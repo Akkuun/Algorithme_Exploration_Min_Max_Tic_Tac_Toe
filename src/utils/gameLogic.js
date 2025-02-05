@@ -11,6 +11,31 @@ export const setN = (num) => {
 export function isInGrid(i, j, n){
     return i >= 0 && i < n && j >= 0 && j < n;
 }
+/**
+ * 
+ * @param {*} i (cell x)
+ * @param {*} j (cell y)
+ * @param {*} n (squareSize)
+ * @param {*} direction (vector of 2 elements representing the direction)
+ */
+export function getLineIndexes(i, j, n, direction){
+    let indexes = [];
+    let x = i;
+    let y = j;
+    for (let m = 0; m < n; m++) {
+        if (!isInGrid(x, y, n)) return null;
+        indexes.push([x, y]);
+        x += direction[0];
+        y += direction[1];
+    }
+    return indexes;
+}
+export const DIRECTIONS = [
+    [1, 0],[-1, 0],
+    [0, 1],[0, -1],
+    [1, 1],[-1, 1],
+    [1, -1],[-1, -1],
+];
 export const WINNING_COMBOS = (tab, squareSize) =>{
     let k = setN(squareSize);
     console.log(squareSize);
@@ -25,16 +50,16 @@ export const WINNING_COMBOS = (tab, squareSize) =>{
         tab.add([2, 4, 6]);
     }else{
         for(let i = 0; i < 4; i++) {
-            if (isInGrid(i, i + 1, squareSize) && isInGrid(i, i + 2, squareSize) && isInGrid(i, i + 3, squareSize)){
-                tab.add([i, i + 1, i + 2, i + 3]);
-            }else if(isInGrid(i, i + 4, squareSize) && isInGrid(i, i + 8, squareSize) && isInGrid(i, i + 12, squareSize)) {
-                tab.add([i, i + 4, i + 8, i + 12]);
-            }else if(isInGrid(i, i+5, squareSize) && isInGrid(i, i+10, squareSize) && isInGrid(i, i+15, squareSize)){
-                tab.add([i, i+5,i+10,i+15]);
-            }else if(isInGrid(i+3, i+6, squareSize) && isInGrid(i+3, i+9, squareSize) && isInGrid(i+3, i+12, squareSize)){
-                tab.add([i+3, i+6, i+9, i+12]);
+            for (let j = 0; j < 4; j++) {
+                for (let vector of DIRECTIONS) {
+                    let indexes = getLineIndexes(i, j, k, vector);
+                    if (indexes) {
+                        tab.add(indexes);
+                    }
+                }
             }
         }
+        console.log(tab);
     }
 };
 
