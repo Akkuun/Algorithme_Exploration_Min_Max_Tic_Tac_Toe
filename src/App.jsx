@@ -97,7 +97,7 @@ function App() {
                 </div>
 
                 <div id="changeSquareSize">
-                    <div>
+                    <div id="rowButton">
                         <button onClick={() => {
                             setSquareSize(Math.max(3, squareSize - 1))
                             const game = document.getElementById("game");
