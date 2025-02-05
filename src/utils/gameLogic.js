@@ -21,6 +21,7 @@ export function isInGrid(i, j, n){
  * @param {*} j (cell y)
  * @param {*} n (squareSize)
  * @param {*} direction (vector of 2 elements representing the direction)
+ * @param {*} k (number of cells to check)
  */
 export function getLineIndexes(i, j, n, direction, k){
     let indexes = [];
@@ -63,7 +64,6 @@ export const WINNING_COMBOS = (tab, squareSize) =>{
                 }
             }
         }
-        console.log(tab);
     }
 };
 

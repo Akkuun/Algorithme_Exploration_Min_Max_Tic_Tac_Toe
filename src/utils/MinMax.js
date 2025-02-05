@@ -1,3 +1,5 @@
+import {WINNING_COMBOS} from './gameLogic';
+
 class MinMax {
 
     //get config -> return actual config
@@ -8,11 +10,15 @@ class MinMax {
 
     config;
     squareSize;
+    winningCombos;
 
     constructor(config,squareSize) {
         this.config = config;
 
         this.squareSize = squareSize;
+
+        this.winningCombos = new Set();
+        WINNING_COMBOS(this.winningCombos, squareSize);
     }
 
     getConfig() {
@@ -21,8 +27,8 @@ class MinMax {
 
     // This function returns true if there are moves remaining on the board. It returns false if there are no moves left to play.
     isMovesLeft() {
-        for (let i = 0; i < 3; i++){
-            for (let j = 0; j < 3; j++){
+        for (let i = 0; i < this.squareSize; i++){
+            for (let j = 0; j < this.squareSize; j++){
                 if (this.config[i][j] === '')
                     return true;
             }
@@ -32,40 +38,24 @@ class MinMax {
 
     // This function evaluates the board and returns a value based on who is winning. (10 if X wins, -10 if O wins, 0 if tie)
     evaluate() {
-        // Checking for Rows for X or O victory.
-        for (let row = 0; row < 3; row++) {
-            if (this.config[row][0] === this.config[row][1] && this.config[row][1] === this.config[row][2]) {
-                if (this.config[row][0] === 'x')
-                    return +10;
-                else if (this.config[row][0] === 'o')
-                    return -10;
+        console.log("evaluate");
+        // Check all combo
+        for (let combo of this.winningCombos) {
+            let player = this.config[combo[0][0]][combo[0][1]];
+            if (!player) continue;
+            for (let i = 1; i < this.squareSize; i++) {
+                if (player !== this.config[combo[i][0]][combo[i][1]]) {
+                    player = null;
+                    break;
+                }
             }
-        }
-
-        // Checking for Columns for X or O victory.
-        for (let col = 0; col < 3; col++) {
-            if (this.config[0][col] === this.config[1][col] && this.config[1][col] === this.config[2][col]) {
-                if (this.config[0][col] === 'x')
-                    return +10;
-                else if (this.config[0][col] === 'o')
+            if (player) {
+                if (player === 'x') {
+                    return 10;
+                } else {
                     return -10;
+                }
             }
-        }
-
-        // Checking for Diagonals for X or O victory.
-        if (this.config[0][0] === this.config[1][1] && this.config[1][1] === this.config[2][2]) {
-            if (this.config[0][0] === 'x')
-                return +10;
-            else if (this.config[0][0] === 'o')
-                return -10;
-        }
-
-        // Checking for Diagonals for X or O victory.
-        if (this.config[0][2] === this.config[1][1] && this.config[1][1] === this.config[2][0]) {
-            if (this.config[0][2] === 'x')
-                return +10;
-            else if (this.config[0][2] === 'o')
-                return -10;
         }
 
         // Else if none of them have won then return 0
@@ -93,8 +83,8 @@ class MinMax {
             let best = -1000;
 
             // Traverse all cells
-            for (let i = 0; i < 3; i++) {
-                for (let j = 0; j < 3; j++) {
+            for (let i = 0; i < this.squareSize; i++) {
+                for (let j = 0; j < this.squareSize; j++) {
                     // Check if cell is empty
                     if (this.config[i][j] === '') {
                         // Make the move
@@ -113,8 +103,8 @@ class MinMax {
             let best = 1000;
 
             // Traverse all cells
-            for (let i = 0; i < 3; i++) {
-                for (let j = 0; j < 3; j++) {
+            for (let i = 0; i < this.squareSize; i++) {
+                for (let j = 0; j < this.squareSize; j++) {
                     // Check if cell is empty
                     if (this.config[i][j] === '') {
                         // Make the move
@@ -141,8 +131,8 @@ class MinMax {
         };
 
         // Traverse all cells, evaluate minimax function for all empty cells. And return the cell with optimal value.
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
+        for (let i = 0; i < this.squareSize; i++) {
+            for (let j = 0; j < this.squareSize; j++) {
                 // Check if cell is empty
                 if (this.config[i][j] === '') {
                     // Make the move
