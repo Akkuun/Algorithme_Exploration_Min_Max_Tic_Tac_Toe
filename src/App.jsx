@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTicTacToe } from "./hooks/useTicTacToe";
 import Button from "./components/Button";
@@ -10,6 +10,15 @@ import Lottie from 'lottie-react';
 import confettiAnimation from './ressources/confettiAnimation.json';
 
 function App() {
+
+    useEffect(() => {
+        const game = document.getElementById("game");
+        if (game) {
+            game.style.setProperty("grid-template-columns", "repeat(" + 5 + ", 1fr)");
+        }
+    }, []);
+
+
     const [audio] = useState(new Audio(clickSound));
     const {
         squares,
@@ -59,15 +68,16 @@ function App() {
                     )}
                 </div>
 
-                <div className="game">
-                    {Array.from("012345678").map((ind) => (
-                        <Square
-                            key={ind}
-                            ind={ind}
-                            updateSquares={handleSquareClick}
-                            clsName={squares[ind]}
-                        />
-                    ))}
+                <div className="game" id='game'>
+                {
+                Array.from({ length: 5*5 }, (_, ind) => (
+                    <Square
+                        key={ind}
+                        ind={ind}
+                        updateSquares={handleSquareClick}
+                        clsName={squares[ind]}
+                    />
+                ))}
                 </div>
 
                 <div className={`turn ${turn === "x" ? "left" : "right"}`}>
