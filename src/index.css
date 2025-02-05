@@ -231,3 +231,12 @@ body {
 .confetti-right {
     right: 0;
 }
+
+#changeSquareSize{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    color: white;
+    width: 70%;
+}

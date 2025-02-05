@@ -11,6 +11,7 @@ export const useTicTacToe = () => {
     const [isAiMode, setIsAiMode] = useState(false);
     const [difficulty, setDifficulty] = useState("easy");
     const [bestMove, setBestMove] = useState([]);
+    const [squareSize, setSquareSize] = useState(3);
 
     const updateSquares = (ind) => {
         if (squares[ind] || winner || (isAiMode && turn === "o")) {
@@ -89,5 +90,7 @@ export const useTicTacToe = () => {
         toggleAiMode,
         changeDifficulty,
         bestMove,
+        squareSize,
+        setSquareSize,
     };
 };
