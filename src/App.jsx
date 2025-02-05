@@ -11,14 +11,8 @@ import confettiAnimation from './ressources/confettiAnimation.json';
 
 function App() {
 
-    useEffect(() => {
-        const game = document.getElementById("game");
-        if (game) {
-            game.style.setProperty("grid-template-columns", "repeat(" + 5 + ", 1fr)");
-        }
-    }, []);
-
-
+    
+    
     const [audio] = useState(new Audio(clickSound));
     const {
         squares,
@@ -34,6 +28,13 @@ function App() {
         squareSize,
         setSquareSize
     } = useTicTacToe();
+    
+    useEffect(() => {
+        const game = document.getElementById("game");
+        if (game) {
+            game.style.setProperty("grid-template-columns", "repeat(" + squareSize + ", 1fr)");
+        }
+    }, [squareSize]);
 
     const handleSquareClick = (index) => {
         audio.play();
@@ -72,7 +73,7 @@ function App() {
 
                 <div className="game" id='game'>
                 {
-                Array.from({ length: 5*5 }, (_, ind) => (
+                Array.from({ length: squareSize*squareSize }, (_, ind) => (
                     <Square
                         key={ind}
                         ind={ind}
@@ -97,9 +98,21 @@ function App() {
 
                 <div id="changeSquareSize">
                     <div>
-                        <button onClick={() => setSquareSize(Math.max(3, squareSize - 1))}>Decrease Square Size</button>
+                        <button onClick={() => {
+                            setSquareSize(Math.max(3, squareSize - 1))
+                            const game = document.getElementById("game");
+                            if (game) {
+                                game.style.setProperty("grid-template-columns", "repeat(" + squareSize + ", 1fr)");
+                            }
+                        }}>Decrease Square Size</button>
                         Actual Square Size : {squareSize}
-                        <button onClick={() => setSquareSize(squareSize+1)}>Increase Square Size</button>
+                        <button onClick={() =>  {
+                            setSquareSize(squareSize+1)
+                            const game = document.getElementById("game");
+                            if (game) {
+                                game.style.setProperty("grid-template-columns", "repeat(" + squareSize + ", 1fr)");
+                            }
+                        }}>Increase Square Size</button>
                     </div>
                 </div>
                 <AnimatePresence>
