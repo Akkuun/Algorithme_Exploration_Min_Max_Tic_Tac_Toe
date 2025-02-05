@@ -240,3 +240,16 @@ body {
     color: white;
     width: 70%;
 }
+
+#changeSquareSize button{
+    display: flex;
+    flex-direction: row;
+}
+#rowButton{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    padding-left: 60%;
+}

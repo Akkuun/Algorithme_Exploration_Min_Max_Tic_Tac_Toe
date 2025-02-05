@@ -1,5 +1,11 @@
 class MinMax {
 
+    //get config -> return actual config
+    //isMovesLeft -> return true if there are moves remaining on the board. It returns false if there are no moves left to play (end of the game)
+    //evaluate -> evaluate the board and returns a value based on who is winning. 10 if x wins, -10 if o wins, 0 if tie
+    //minimax -> minimax function. It considers all the possible ways the game can go and returns the value of the board
+    //findBestMove -> return the best possible move for the player
+
     config;
 
     constructor(config) {
@@ -21,7 +27,7 @@ class MinMax {
         return false;
     }
 
-    // This function evaluates the board and returns a value based on who is winning.
+    // This function evaluates the board and returns a value based on who is winning. (10 if X wins, -10 if O wins, 0 if tie)
     evaluate() {
         // Checking for Rows for X or O victory.
         for (let row = 0; row < 3; row++) {
@@ -51,6 +57,7 @@ class MinMax {
                 return -10;
         }
 
+        // Checking for Diagonals for X or O victory.
         if (this.config[0][2] === this.config[1][1] && this.config[1][1] === this.config[2][0]) {
             if (this.config[0][2] === 'x')
                 return +10;
@@ -153,7 +160,6 @@ class MinMax {
                 }
             }
         }
-
         return bestMove;
     }
 
