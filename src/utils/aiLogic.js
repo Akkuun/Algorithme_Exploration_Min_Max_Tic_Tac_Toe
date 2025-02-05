@@ -1,7 +1,7 @@
 import { checkWinner, checkEndTheGame } from "./gameLogic";
 
-export const minimax = (board, depth, isMaximizing) => {
-    const result = checkWinner(board);
+export const minimax = (board, depth, isMaximizing, squareSize) => {
+    const result = checkWinner(board, squareSize);
 
     // Scoring with depth consideration
     if (result === "o") return 10 - depth;
@@ -13,7 +13,7 @@ export const minimax = (board, depth, isMaximizing) => {
         for (let i = 0; i < board.length; i++) {
             if (board[i] === "") {
                 board[i] = "o";
-                let score = minimax(board, depth + 1, false);
+                let score = minimax(board, depth + 1, false, squareSize);
                 board[i] = "";
                 bestScore = Math.max(score, bestScore);
             }
@@ -24,7 +24,7 @@ export const minimax = (board, depth, isMaximizing) => {
         for (let i = 0; i < board.length; i++) {
             if (board[i] === "") {
                 board[i] = "x";
-                let score = minimax(board, depth + 1, true);
+                let score = minimax(board, depth + 1, true, squareSize);
                 board[i] = "";
                 bestScore = Math.min(score, bestScore);
             }
@@ -33,7 +33,7 @@ export const minimax = (board, depth, isMaximizing) => {
     }
 };
 
-export const findBestMove = (board, difficulty) => {
+export const findBestMove = (board, difficulty, squareSize) => {
     // Easy Mode: Random move
     if (difficulty === "easy") {
         const emptySquares = board.reduce(
@@ -67,7 +67,7 @@ export const findBestMove = (board, difficulty) => {
     for (let i = 0; i < board.length; i++) {
         if (board[i] === "") {
             board[i] = "o";
-            const winner = checkWinner(board);
+            const winner = checkWinner(board, squareSize);
             board[i] = "";
             if (winner === "o") return i;
         }
@@ -77,7 +77,7 @@ export const findBestMove = (board, difficulty) => {
     for (let i = 0; i < board.length; i++) {
         if (board[i] === "") {
             board[i] = "x";
-            const winner = checkWinner(board);
+            const winner = checkWinner(board,squareSize);
             board[i] = "";
             if (winner === "x") return i;
         }
@@ -87,7 +87,7 @@ export const findBestMove = (board, difficulty) => {
     for (let i = 0; i < board.length; i++) {
         if (board[i] === "") {
             board[i] = "o";
-            let score = minimax(board, 0, false);
+            let score = minimax(board, 0, false, squareSize);
             board[i] = "";
 
             // Prefer priority squares if scores are close

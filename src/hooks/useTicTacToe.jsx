@@ -23,7 +23,7 @@ export const useTicTacToe = () => {
         MinMaxAlgorithm(s);
 
         setTurn(turn === "x" ? "o" : "x");
-        const W = checkWinner(s);
+        const W = checkWinner(s, squareSize);
         if (W) {
             setWinner(W);
         } else if (checkEndTheGame(s)) {
@@ -35,7 +35,7 @@ export const useTicTacToe = () => {
     const MinMaxAlgorithm = (s) => {
         //Actual configuration in a Matrix
         let configMatrix =[[ s[0], s[1], s[2]],[s[3],s[4],s[5]] ,[s[5],s[6],s[7]] ];
-        const minMaxInstance = new MinMax(configMatrix);
+        const minMaxInstance = new MinMax(configMatrix, squareSize);
 
         setBestMove([minMaxInstance.findBestMove().row, minMaxInstance.findBestMove().col]);
     }
@@ -43,13 +43,13 @@ export const useTicTacToe = () => {
     // AI move logic
     useEffect(() => {
         if (isAiMode && turn === "o" && !winner) {
-            const bestMove = findBestMove([...squares], difficulty);
+            const bestMove = findBestMove([...squares], difficulty, squareSize);
             if (bestMove !== -1) {
                 const s = [...squares];
                 s[bestMove] = "o";
                 setSquares(s);
                 setTurn("x");
-                const W = checkWinner(s);
+                const W = checkWinner(s, squareSize);
                 if (W) {
                     setWinner(W);
                 } else if (checkEndTheGame(s)) {

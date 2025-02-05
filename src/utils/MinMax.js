@@ -7,9 +7,12 @@ class MinMax {
     //findBestMove -> return the best possible move for the player
 
     config;
+    squareSize;
 
-    constructor(config) {
+    constructor(config,squareSize) {
         this.config = config;
+
+        this.squareSize = squareSize;
     }
 
     getConfig() {
