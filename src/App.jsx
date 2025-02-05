@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useTicTacToe } from "./hooks/useTicTacToe";
+import {useState, useEffect} from 'react';
+import {motion, AnimatePresence} from 'framer-motion';
+import {useTicTacToe} from "./hooks/useTicTacToe";
 import Button from "./components/Button";
 import Square from "./components/Square";
 import GIF from "./ressources/Cat_GIF.gif";
@@ -31,6 +31,8 @@ function App() {
         toggleAiMode,
         changeDifficulty,
         bestMove,
+        squareSize,
+        setSquareSize
     } = useTicTacToe();
 
     const handleSquareClick = (index) => {
@@ -41,7 +43,7 @@ function App() {
     return (
         <div className="Repartition">
             <div id="OIA_1">
-                <img src={GIF} alt="Cool animation" />
+                <img src={GIF} alt="Cool animation"/>
             </div>
 
             <div className="tic-tac-toe">
@@ -57,7 +59,7 @@ function App() {
                 <h3>Min Max</h3>
 
                 <div className="game-controls">
-                    <Button resetGame={resetGame} text="Reset Game" />
+                    <Button resetGame={resetGame} text="Reset Game"/>
                     <button onClick={toggleAiMode} className="ai-toggle">
                         {isAiMode ? "Disable AI" : "Enable AI"}
                     </button>
@@ -81,30 +83,38 @@ function App() {
                 </div>
 
                 <div className={`turn ${turn === "x" ? "left" : "right"}`}>
-                    <Square clsName="x" />
-                    <Square clsName="o" />
+                    <Square clsName="x"/>
+                    <Square clsName="o"/>
                 </div>
 
                 <div className="bestMove">
                     Best Move given by MinMax Algorithm is :
                 </div>
                 <div id="blocMove">
-                    <div className="bestMove">line <span className={turn}>{bestMove[0]}</span> : column <span className={turn}>{bestMove[1]}</span></div>
+                    <div className="bestMove">line <span className={turn}>{bestMove[0]}</span> : column <span
+                        className={turn}>{bestMove[1]}</span></div>
                 </div>
 
+                <div id="changeSquareSize">
+                    <div>
+                        <button onClick={() => setSquareSize(Math.max(3, squareSize - 1))}>Decrease Square Size</button>
+                        Actual Square Size : {squareSize}
+                        <button onClick={() => setSquareSize(squareSize+1)}>Increase Square Size</button>
+                    </div>
+                </div>
                 <AnimatePresence>
                     {winner && (
                         <motion.div
                             key={"parent-box"}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
+                            initial={{opacity: 0}}
+                            animate={{opacity: 1}}
+                            exit={{opacity: 0}}
                             className="winner"
                         >
                             <motion.div
                                 key={"child-box"}
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
+                                initial={{scale: 0}}
+                                animate={{scale: 1}}
                                 exit={{
                                     scale: 0,
                                     opacity: 0,
@@ -146,12 +156,12 @@ function App() {
                                 >
                                     {winner === "x | o" ? (
                                         <>
-                                            <Square clsName="x" />
-                                            <Square clsName="o" />
+                                            <Square clsName="x"/>
+                                            <Square clsName="o"/>
                                         </>
                                     ) : (
                                         <>
-                                            <Square clsName={winner} />
+                                            <Square clsName={winner}/>
                                         </>
                                     )}
                                 </motion.div>
@@ -167,7 +177,7 @@ function App() {
                                         },
                                     }}
                                 >
-                                    <Button resetGame={resetGame} text="Play Again" />
+                                    <Button resetGame={resetGame} text="Play Again"/>
                                 </motion.div>
                             </motion.div>
                         </motion.div>
@@ -176,16 +186,16 @@ function App() {
             </div>
 
             <div id="OIA_2">
-                <img src={GIF} alt="Cool animation" />
+                <img src={GIF} alt="Cool animation"/>
             </div>
 
             {winner && (
                 <>
                     <div className="confetti-left">
-                        <Lottie animationData={confettiAnimation} loop={true} />
+                        <Lottie animationData={confettiAnimation} loop={true}/>
                     </div>
                     <div className="confetti-right">
-                        <Lottie animationData={confettiAnimation} loop={true} />
+                        <Lottie animationData={confettiAnimation} loop={true}/>
                     </div>
                 </>
             )}
