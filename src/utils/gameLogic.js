@@ -41,9 +41,15 @@ export const DIRECTIONS = [
     [1, 1],[-1, 1],
     [1, -1],[-1, -1],
 ];
+let winningCombos = new Set();
+let last_winningCombos_size = 0;
 export const WINNING_COMBOS = (tab, squareSize) =>{
+    if(last_winningCombos_size === squareSize) {
+        tab = winningCombos;
+        return;
+    }
     let k = setN(squareSize);
-    console.log(squareSize);
+    //console.log(squareSize);
     if(k===3) {
         tab.add([0, 1, 2]);
         tab.add([3, 4, 5]);
@@ -85,6 +91,28 @@ export const checkWinner = (board, squareSize) => {
     }
     return null;
 };
+
+export const checkWinnerFromLastMove = (board, squareSize, lastMove) => {
+    let x = lastMove.x;
+    let y = lastMove.y;
+
+    const winningCombos = new Set();
+    WINNING_COMBOS(winningCombos, squareSize)
+    const specific_combos = Array.from(winningCombos).filter((combo) => combo.includes(x * squareSize + y));
+    for (let combo of specific_combos) {
+        let player = board[combo[0]];
+        if (!player) continue;
+        for (let i = 1; i < setN(squareSize); i++) {
+            if (player !== board[combo[i]]) {
+                player = null;
+                break;
+            }
+        }
+        if (player) {
+            return player;
+        }
+    }
+}
 
 export const checkEndTheGame = (board) => {
     return board.every((square) => square !== "");

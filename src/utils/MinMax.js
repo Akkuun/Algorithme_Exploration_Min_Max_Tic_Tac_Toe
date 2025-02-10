@@ -48,8 +48,30 @@ class MinMax {
         return 0;
     }
 
-    minimax(depth, isMax, alpha, beta) {
-        let score = this.evaluate();
+    evaluate(x, y) {
+        if (x == null || y == null) return this.evaluate();
+        let specific_combos = Array.from(this.winningCombos).filter((combo) => combo.includes(x * this.squareSize + y));
+        for (let combo of specific_combos) {
+            let player = this.config[combo[0][0]][combo[0][1]];
+            if (!player) continue;
+            for (let i = 1; i < this.squareSize; i++) {
+                if (player !== this.config[combo[i][0]][combo[i][1]]) {
+                    player = null;
+                    break;
+                }
+            }
+            if (player) {
+                if (player === 'x') {
+                    return 10;
+                } else {
+                    return -10;
+                }
+            }
+        }
+    }
+
+    minimax(depth, isMax, alpha, beta, x=null, y=null) {
+        let score = this.evaluate(x, y);
 
         if (score === 10)
             return score;
@@ -69,7 +91,7 @@ class MinMax {
                     if (this.config[i][j] === '') {
                         this.config[i][j] = 'x';
 
-                        best = Math.max(best, this.minimax(depth + 1, !isMax, alpha, beta));
+                        best = Math.max(best, this.minimax(depth + 1, !isMax, alpha, beta, i, j));
 
                         this.config[i][j] = '';
 
@@ -88,7 +110,7 @@ class MinMax {
                     if (this.config[i][j] === '') {
                         this.config[i][j] = 'o';
 
-                        best = Math.min(best, this.minimax(depth + 1, !isMax, alpha, beta));
+                        best = Math.min(best, this.minimax(depth + 1, !isMax, alpha, beta, i, j));
 
                         this.config[i][j] = '';
 
@@ -112,10 +134,11 @@ class MinMax {
 
         for (let i = 0; i < this.squareSize; i++) {
             for (let j = 0; j < this.squareSize; j++) {
+                console.log("Processing: ", i, " ", j);
                 if (this.config[i][j] === '') {
                     this.config[i][j] = 'x';
 
-                    let moveVal = this.minimax(0, false, -1000, 1000);
+                    let moveVal = this.minimax(0, false, -1000, 1000, i, j);
 
                     this.config[i][j] = '';
 
