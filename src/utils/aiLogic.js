@@ -87,7 +87,10 @@ export const findBestMove = (board, difficulty, squareSize) => {
     for (let i = 0; i < board.length; i++) {
         if (board[i] === "") {
             board[i] = "o";
-            let score = minimax(board, 0, false, squareSize);
+            let x = i % squareSize;
+            let y = Math.floor(i / squareSize);
+            console.log("Processing", x, " ", y);
+            let score = minimax(board, 0, false, squareSize, x, y);
             board[i] = "";
 
             // Prefer priority squares if scores are close
